@@ -33,7 +33,7 @@ module Capybara
       end
 
       def [] filename
-        Capybara.current_session.document.synchronize do
+        Capybara.current_session.document.synchronize(errors: [NotFound]) do
           begin
             File.open(pathname.join(filename))
           rescue Errno::ENOENT
