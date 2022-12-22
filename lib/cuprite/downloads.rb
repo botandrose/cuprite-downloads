@@ -32,8 +32,8 @@ module Capybara
         pathname.entries.reject(&:directory?).map(&:to_s)
       end
 
-      def [] filename
-        Capybara.current_session.document.synchronize(errors: [NotFound]) do
+      def [] filename, wait: Capybara.default_max_wait_time
+        Capybara.current_session.document.synchronize(wait, errors: [NotFound]) do
           begin
             File.open(pathname.join(filename))
           rescue Errno::ENOENT
